@@ -249,9 +249,9 @@ def get_inconsistencies(db, tbl, slave, user, passwd,
 
             # Feed diff with the records from the master and slave
             # to show the difference to a user
-            cmd = ["diff", "-u", master_filename, slave_filename]
+            cmd = "diff -U 0 " + master_filename + " " + slave_filename + " | ./diff-highlight | colordiff"
             proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
+                                    stderr=subprocess.PIPE, shell=True)
             cout, cerr = proc.communicate()
             log.info("Differences between slave %s and its master:\n"
                      % slave + cout)
